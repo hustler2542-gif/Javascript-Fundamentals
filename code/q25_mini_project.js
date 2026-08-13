@@ -46,7 +46,7 @@ console.log('\n')
 console.log('Whether atleast one student score more than 90+' + students.some((x)=> x.marks > 90))
 console.log('\n')
 
-console.log('Whether every active student passed' + students.some((x)=> x.active == true && x.marks > 50))
+console.log('Whether every active student passed' + students.every((x)=> x.active == true && x.marks > 50))
 console.log('\n')
 
 console.log('Total marks of all the students')

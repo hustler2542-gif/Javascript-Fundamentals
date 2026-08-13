@@ -6,18 +6,12 @@
 
 // console.log(person.introduce()); 
 
-
-class personclass {
-    constructor(name, age){
-        this.age = age
-        this.name = name
-    }
-
-    person = {
-        introduce: () => 'Hello my name is ' + this.name + ' Im ' + this.age + ' years old.'
+student = {
+    name: 'Ary',
+    age: 20, 
+    introduce: function() {
+        return (`${this.name} is ${this.age} year old`)
     }
 }
 
-let obj1 = new personclass('Aru', 20)
-
-console.log(obj1.person.introduce())
+console.log(student.introduce())
