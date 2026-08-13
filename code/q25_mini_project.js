@@ -61,11 +61,16 @@ console.log('\n')
 
 console.log('Student below 80 marks get +5 bonus: ')
 
-lowperforming.forEach((element)=>{
-    element.marks += 5; 
-})
+const lpstudents = lowperforming.map((x) => 
+{   
 
-console.log(lowperforming); 
+    return `${x.name} scored ${x.marks + 5}`
+}) 
+
+console.log(lpstudents); 
+// console.log(lowperforming)
+// console.log(students)
+
 console.log('\n'); 
 
 const summaryofstudents = students.map((x) => 
