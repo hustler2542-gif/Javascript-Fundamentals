@@ -22,6 +22,7 @@ A final formatted sentence for each high-scoring student using a template litera
 
 const highperforming = students.filter((x)=> x.marks >= 80)
 const lowperforming = students.filter((x)=> x.marks < 80)
+const activestudents = students.filter((x) => x.active === true)
 
 console.log('All the active students: ')
 const active_students = students.filter((x)=> x.active == true)
@@ -46,7 +47,7 @@ console.log('\n')
 console.log('Whether atleast one student score more than 90+' + students.some((x)=> x.marks > 90))
 console.log('\n')
 
-console.log('Whether every active student passed' + students.every((x)=> x.active == true && x.marks > 50))
+console.log('Whether every active student passed' + active_students.every((x)=> x.active == true && x.marks >= 40))
 console.log('\n')
 
 console.log('Total marks of all the students')
@@ -63,8 +64,9 @@ console.log('Student below 80 marks get +5 bonus: ')
 
 const lpstudents = lowperforming.map((x) => 
 {   
-
-    return `${x.name} scored ${x.marks + 5}`
+    const tempstore = {...x}
+    tempstore.marks = tempstore.marks + 5
+    return tempstore
 }) 
 
 console.log(lpstudents); 
