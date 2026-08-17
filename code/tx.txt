@@ -1,0 +1,29 @@
+ory
+path <string> | <Buffer> | <URL> | <integer> filename or file descriptor
+options <Object> | <string>
+encoding <string> | <null> Default: null
+flag <string> See support of file system flags. Default: 'r'.
+signal <AbortSignal> allows aborting an in-progress readFile
+buffer <Buffer> | <TypedArray> | <DataView> | <Function> A buffer to read into, or a function called with the file size that returns the buffer.
+callback <Function>
+err <Error> | <AggregateError>
+data <string> | <Buffer>
+Asynchronously reads the entire contents of a file.
+
+import { readFile } from 'node:fs';
+
+readFile('/etc/passwd', (err, data) => {
+  if (err) throw err;
+  console.log(data);
+});
+mjs
+copy
+The callback is passed two arguments (err, data), where data is the contents of the file.
+
+If no encoding is specified, then the raw buffer is returned.
+
+If buffer is provided and no encoding is specified, the returned <Buffer> is a view over the supplied buffer containing only the bytes read. If the supplied buffer is too small to contain the entire file, the callback is called with an error.
+
+If options is a string, then it specifies the encoding:
+
+import { readFile } from 'node:fs';
