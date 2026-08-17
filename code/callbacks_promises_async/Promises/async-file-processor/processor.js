@@ -1,24 +1,37 @@
+const { read } = require('node:fs');
 const { readFile } = require('node:fs/promises');
 const path = require('node:path');
 const { resolve } = require('node:path');
 
-async function simulateProcessing(fileName){
-    return new Promise((resolve, reject)=> {
-        setTimeout(function(){ 
-        console.log(fileName + ' Started processing..')
-        resolve(fileName + ' processed')
-    }, 2000)
+async function simulateProcessing(fileName) {
+    return new Promise((resolve)=> {
+        setTimeout(()=> {
+            const data = fileName + ' file has been processed ' 
+            resolve(data.toString())
+        }, 2000)
     })
 }
+
+async function processSingleFile(fileName){
+        const filePath = `D:/coding/code/callbacks_promises_async/Promises/async-file-processor/input/${fileName}`
+        try{
+            const content = await readFile(filePath, {encoding:"utf-8"} )
+            const processingData = await simulateProcessing(fileName)
+            return content  + processingData
+        }catch(error) {
+            throw error;
+        }
+}
+
 
 async function processFile(files){
     
     try {
     const promises = files.map((file) => {
-        return simulateProcessing(file)
+        return processSingleFile(file)
     })
 
-    const result = await Promise.all(promises)
+    const result = await Promise.allSettled(promises)
     console.log(result)
     }
     catch(error){
