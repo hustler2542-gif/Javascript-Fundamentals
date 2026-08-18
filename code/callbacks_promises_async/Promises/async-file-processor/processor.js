@@ -54,7 +54,6 @@ async function processSingleFile(fileName){
 }
 
 async function processFile(files){
-    
     try {
     const promises = files.map((file) => {
         return processSingleFile(file)
