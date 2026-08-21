@@ -16,7 +16,9 @@ const server = http.createServer((req, res) => {
     else if(req.url.startsWith('/tasks/') && req.method === 'GET'){
         const url_splitter = req.url.split('/')
         let number = Number(url_splitter[2])
+
         const task = tasks.find((id)=> id.id === number)
+        
         if(task){    
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(task))
@@ -32,9 +34,10 @@ const server = http.createServer((req, res) => {
         })
         req.on('end', ()=> {
             const json_data = JSON.parse(body)
-            console.log(json_data)
+            
             let newOjb = {id:idCounter, ...json_data}
             tasks.push(newOjb)
+
             idCounter = idCounter + 1; 
             res.end('Task created')
         })
