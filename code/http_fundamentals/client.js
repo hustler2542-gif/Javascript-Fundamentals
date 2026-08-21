@@ -5,10 +5,9 @@ const options = {
     port: 3000,
     path: '/tasks',
     method: 'POST',
-    body: 'Learn http'
+    body: {"title":"Learn http"}
 };
 
 const request = http.request(options)
-
-request.write(options.body)
+request.write(JSON.stringify(options.body))
 request.end()
