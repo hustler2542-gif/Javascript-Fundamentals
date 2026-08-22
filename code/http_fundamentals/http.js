@@ -1,18 +1,23 @@
 const http = require('http')
 
+
+// In built server memory
 const tasks = []
 let idCounter = 1
 
 const server = http.createServer((req, res) => {
     let body =''
+
     if(req.url === '/'){
         res.statusCode = 200
         res.end('Hello from Home')
     }
+    // Get all tasks method
     else if(req.url === '/tasks' && req.method === 'GET'){
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(tasks))
     }
+    // Get specific task method
     else if(req.url.startsWith('/tasks/') && req.method === 'GET'){
         const url_splitter = req.url.split('/')
         let number = Number(url_splitter[2])
@@ -28,6 +33,7 @@ const server = http.createServer((req, res) => {
             res.end('Task not found')
         }
     }
+    // Post method
     else if(req.url === '/tasks' && req.method === 'POST'){
         req.on('data', (chunk)=> {
             body = body + chunk
@@ -41,7 +47,18 @@ const server = http.createServer((req, res) => {
             idCounter = idCounter + 1; 
             res.end('Task created')
         })
+    }
+    // Delete method
+    else if(req.url.startsWith('/tasks/') && req.method === 'DELETE'){
+            
+        const url_splitter = req.url.split('/')
+        let number = Number(url_splitter[2])
+            
+        const index_of_task = tasks.findIndex((task) => task.id === number)
+            tasks.splice(index_of_task, 1)
 
+            res.setHeader('Content-Type', 'plain/text');
+            res.end('Task removed')
     }
 })
 
