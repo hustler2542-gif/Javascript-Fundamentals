@@ -1,4 +1,5 @@
 const http = require('http')
+const { json } = require('stream/consumers')
 
 
 // In built server memory
@@ -59,6 +60,32 @@ const server = http.createServer((req, res) => {
 
             res.setHeader('Content-Type', 'plain/text');
             res.end('Task removed')
+    }
+/** 
+ * To perform patch you need same the id of the task and what data you want to update the user mentions the id and resource task 
+ * provides with body of data to be updated 
+ * 
+ * our server 
+ * extracts the id 
+ * finds the index of the object based on id 
+ * from array[index].update the property with the requested body. 
+ * respond back with updated the task with response stream. 
+ */
+else if(req.url.startsWith('/tasks/') && req.method === 'PATCH'){
+            
+        const url_splitter = req.url.split('/')
+        let number = Number(url_splitter[2])
+        
+        req.on('data', (chunk)=> {
+            body = body + chunk
+        })
+        req.on('end', ()=>{
+        const index_of_task = tasks.findIndex((task) => task.id === number)
+            Jsondata = JSON.parse(body)
+            tasks[index_of_task].title = Jsondata.title 
+            res.setHeader('Content-Type', 'plain/text');
+            res.end('Task updated')
+        })
     }
 })
 
